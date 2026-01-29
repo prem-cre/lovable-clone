@@ -119,9 +119,18 @@ export default function Home() {
       <div className="relative flex-1 flex flex-col">
         {/* Hero section */}
         <div className="flex-1 flex flex-col items-center justify-center px-4 pb-20">
+          {/* Logo */}
+          <div className="mb-6 flex items-center justify-center">
+            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-500 to-purple-600 p-0.5 shadow-lg shadow-blue-500/20">
+              <div className="w-full h-full rounded-[14px] bg-[#0a0a0a] flex items-center justify-center overflow-hidden">
+                <img src="/icon.png" alt="CoderBuddy Logo" className="w-12 h-12 object-contain" />
+              </div>
+            </div>
+          </div>
+
           {/* Headline */}
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-10 text-center">
-            Got an idea, Prem?
+          <h1 className="text-4xl md:text-5xl font-bold text-white mb-10 text-center tracking-tight">
+            Got an idea, Vibe Coder?
           </h1>
 
           {/* Prompt input */}
@@ -142,7 +151,7 @@ export default function Home() {
                   <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
                   <div className="w-3 h-3 rounded-full bg-green-500"></div>
                 </div>
-                <span className="text-xs text-gray-400">Preview</span>
+                <span className="text-xs text-gray-400">CoderBuddy Preview</span>
                 <div></div>
               </div>
               <iframe

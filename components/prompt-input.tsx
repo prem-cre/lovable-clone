@@ -31,7 +31,7 @@ export function PromptInput({ onSubmit }: PromptInputProps) {
         <div className="mb-3">
           <input
             type="text"
-            placeholder="Ask Lovable to create a prototype..."
+            placeholder="Ask CoderBuddy to create a prototype..."
             value={prompt}
             onChange={(e) => setPrompt(e.target.value)}
             onKeyDown={handleKeyDown}
