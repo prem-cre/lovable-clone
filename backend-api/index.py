@@ -6,5 +6,5 @@ from pathlib import Path
 root_dir = Path(__file__).parent.parent
 sys.path.append(str(root_dir / "backend"))
 
-# Import the FastAPI app from backend/api.py
-from api import app
+# Import the FastAPI app from backend/server.py
+from server import app

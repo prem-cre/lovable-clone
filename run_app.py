@@ -10,7 +10,7 @@ def run_backend(root_dir):
     backend_dir = os.path.join(root_dir, "backend")
     try:
         # The backend requires GROQ_API_KEY. It's loaded from .env inside api.py
-        subprocess.run([sys.executable, "api.py"], cwd=backend_dir, check=True)
+        subprocess.run([sys.executable, "server.py"], cwd=backend_dir, check=True)
     except Exception as e:
         print(f"Backend Error: {e}")
 

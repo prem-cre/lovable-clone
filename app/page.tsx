@@ -22,13 +22,21 @@ export default function Home() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt }),
       });
+
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(`Server error (${res.status}): ${text.slice(0, 100)}`);
+      }
+
       const data = await res.json();
       if (data.status === "success") {
         setGeneratedFiles(data.files);
+      } else {
+        throw new Error(data.detail || "Generation failed");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error generating code:", error);
-      alert("Failed to connect to the backend. Make sure api.py is running on port 8000.");
+      alert(`Error: ${error.message || "Failed to connect to backend"}. \n\nNote: On Vercel Hobby plan, generations may timeout after 10s.`);
     } finally {
       setLoading(false);
     }
