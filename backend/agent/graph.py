@@ -14,15 +14,15 @@ _ = load_dotenv()
 # set_debug(True)
 # set_verbose(True)
 
-llm = ChatGroq(model="llama-3.3-70b-versatile", request_timeout=60)
+llm = ChatGroq(model="llama-3.1-70b-versatile", request_timeout=60)
 
 
 def planner_agent(state: dict) -> dict:
     """Converts user prompt into a structured Plan."""
     user_prompt = state["user_prompt"]
-    resp = llm.with_structured_output(Plan).invoke(
-        planner_prompt(user_prompt)
-    )
+    # Adding a nudge for structured output stability
+    prompt = planner_prompt(user_prompt) + "\n\nCRITICAL: You must provide a valid JSON response matching the required schema. Do not include any conversational filler."
+    resp = llm.with_structured_output(Plan).invoke(prompt)
     if resp is None:
         raise ValueError("Planner did not return a valid response.")
     return {"plan": resp}
@@ -31,9 +31,8 @@ def planner_agent(state: dict) -> dict:
 def architect_agent(state: dict) -> dict:
     """Creates TaskPlan from Plan."""
     plan: Plan = state["plan"]
-    resp = llm.with_structured_output(TaskPlan).invoke(
-        architect_prompt(plan=plan.model_dump_json())
-    )
+    prompt = architect_prompt(plan=plan.model_dump_json()) + "\n\nCRITICAL: You must provide a valid JSON response matching the required schema. Do not include any conversational filler."
+    resp = llm.with_structured_output(TaskPlan).invoke(prompt)
     if resp is None:
         raise ValueError("Planner did not return a valid response.")
 
