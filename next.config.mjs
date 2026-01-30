@@ -10,8 +10,8 @@ const nextConfig = {
     if (process.env.NODE_ENV === 'production') return []
     return [
       {
-        source: '/api/:path*',
-        destination: 'http://localhost:8000/api/:path*',
+        source: '/api/chat',
+        destination: 'http://localhost:8000/chat',
       },
     ]
   },

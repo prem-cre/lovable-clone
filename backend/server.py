@@ -24,7 +24,6 @@ class PromptRequest(BaseModel):
 async def health():
     return {"status": "ok", "message": "CoderBuddy Backend is live"}
 
-@app.post("/api/chat")
 @app.post("/chat")
 async def chat(request: PromptRequest):
     try:
