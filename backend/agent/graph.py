@@ -14,7 +14,7 @@ _ = load_dotenv()
 # set_debug(True)
 # set_verbose(True)
 
-llm = ChatGroq(model="llama-3.1-70b-versatile", request_timeout=60)
+llm = ChatGroq(model="llama-3.1-8b-instant", request_timeout=60)
 
 
 def planner_agent(state: dict) -> dict:
