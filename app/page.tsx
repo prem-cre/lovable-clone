@@ -138,7 +138,7 @@ export default function Home() {
 
           {/* Headline */}
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-10 text-center tracking-tight">
-            Got an idea, Vibe Coder? (Deploy V6)
+            Got an idea, Vibe Coder? (Deploy V7 EMERGENCY)
           </h1>
 
           {/* Prompt input */}
