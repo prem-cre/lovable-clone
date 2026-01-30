@@ -166,7 +166,7 @@ MIT License
 ## Contact
 
 **Project**: [https://github.com/your-username/coderbuddy](https://github.com/your-username/coderbuddy)  
-**Demo**: [https://coderbuddy.vercel.app]([https://your-deployment.vercel.app](https://lovable-clone-lyart.vercel.app/])
+**Demo**: [https://coderbuddy.vercel.app]([https://lovable-clone-lyart.vercel.app/])
 **Email** : mahantypremkumar2007@gmail.com
 
 ---
