@@ -3,11 +3,11 @@
     "rewrites": [
         {
             "source": "/api/(.*)",
-            "destination": "/backend-api/index.py"
+            "destination": "/api/index.py"
         }
     ],
     "functions": {
-        "backend-api/*.py": {
+        "api/*.py": {
             "maxDuration": 10
         }
     }

@@ -12,11 +12,10 @@ export default function Home() {
   const handlePromptSubmit = async (prompt: string) => {
     setLoading(true);
     setGeneratedFiles(null);
+    // Use proxy or relative URL for production, localhost for dev
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+    const endpoint = apiUrl ? `${apiUrl}/api/chat` : "/api/chat";
     try {
-      // Use proxy or relative URL for production, localhost for dev
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
-      const endpoint = apiUrl ? `${apiUrl}/api/chat` : "/api/chat";
-
       const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -35,8 +34,9 @@ export default function Home() {
         throw new Error(data.detail || "Generation failed");
       }
     } catch (error: any) {
-      console.error("Error generating code:", error);
-      alert(`Error: ${error.message || "Failed to connect to backend"}. \n\nNote: On Vercel Hobby plan, generations may timeout after 10s.`);
+      console.error("DEBUG - API Error:", error);
+      const isVercel = window.location.hostname.includes('vercel.app');
+      alert(`CoderBuddy Debug Error: ${error.message}. \n\nEnvironment: ${isVercel ? 'Production (Vercel)' : 'Local'}\nEndpoint: ${endpoint}\n\nIf on Vercel, please check logs in dashboard.`);
     } finally {
       setLoading(false);
     }
@@ -54,14 +54,9 @@ export default function Home() {
     let content = generatedFiles[entryFile] || "";
 
     // 2. Create a map of files to their content/blob URLs
-    // For text files we can use them directly or via Blobs
-    // For binary/images (if they were sent as base64 or similar, though here they are strings)
-
     const fileMap = { ...generatedFiles };
 
     // 3. Process the content to replace relative paths with actual content
-    // We'll use a more robust regex-based injection for CSS and JS
-
     // Inject all CSS files found in the project into the <head>
     const cssFiles = Object.keys(fileMap).filter(f => f.endsWith('.css'));
     let cssInjection = "";
@@ -93,8 +88,6 @@ export default function Home() {
     }
 
     // 4. Handle Images and Assets & Cleanup
-    // We'll replace relative paths in the HTML with their corresponding data URLs
-    // AND remove original <link> and <script> tags to prevent 404s
     Object.keys(fileMap).forEach(path => {
       const escapedPath = path.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
@@ -138,7 +131,7 @@ export default function Home() {
 
           {/* Headline */}
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-10 text-center tracking-tight">
-            Got an idea, Vibe Coder?
+            Got an idea, Vibe Coder? (Deploy V3)
           </h1>
 
           {/* Prompt input */}

@@ -12,11 +12,10 @@ export default function Home() {
   const handlePromptSubmit = async (prompt: string) => {
     setLoading(true);
     setGeneratedFiles(null);
+    // Use proxy or relative URL for production, localhost for dev
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
+    const endpoint = apiUrl ? `${apiUrl}/api/chat` : "/api/chat";
     try {
-      // Use proxy or relative URL for production, localhost for dev
-      const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
-      const endpoint = apiUrl ? `${apiUrl}/api/chat` : "/api/chat";
-
       const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -35,8 +34,9 @@ export default function Home() {
         throw new Error(data.detail || "Generation failed");
       }
     } catch (error: any) {
-      console.error("Error generating code:", error);
-      alert(`Error: ${error.message || "Failed to connect to backend"}. \n\nNote: On Vercel Hobby plan, generations may timeout after 10s.`);
+      console.error("DEBUG - API Error:", error);
+      const isVercel = window.location.hostname.includes('vercel.app');
+      alert(`CoderBuddy Debug Error: ${error.message}. \n\nEnvironment: ${isVercel ? 'Production (Vercel)' : 'Local'}\nEndpoint: ${endpoint}\n\nIf on Vercel, please check logs in dashboard.`);
     } finally {
       setLoading(false);
     }
@@ -138,7 +138,7 @@ export default function Home() {
 
           {/* Headline */}
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-10 text-center tracking-tight">
-            Got an idea, Vibe Coder?
+            Got an idea, Vibe Coder? (Deploy V3)
           </h1>
 
           {/* Prompt input */}

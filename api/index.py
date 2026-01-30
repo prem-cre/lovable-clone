@@ -1,5 +1,4 @@
 import sys
-import os
 from pathlib import Path
 
 # Add the root directory to path so we can import from backend/
