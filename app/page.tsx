@@ -16,11 +16,17 @@ export default function Home() {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || "";
     const endpoint = apiUrl ? `${apiUrl}/api/chat` : "/api/chat";
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 180000); // 3 minute timeout
+
       const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ prompt }),
+        signal: controller.signal,
       });
+
+      clearTimeout(timeoutId);
 
       if (!res.ok) {
         const text = await res.text();
@@ -138,7 +144,7 @@ export default function Home() {
 
           {/* Headline */}
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-10 text-center tracking-tight">
-            Got an idea, Vibe Coder? (Deploy V10 TESTED)
+            Got an idea, Vibe Coder? (Deploy V10 GEMINI ✅)
           </h1>
 
           {/* Prompt input */}

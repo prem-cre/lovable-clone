@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 # from langchain.globals import set_verbose, set_debug
-from langchain_groq.chat_models import ChatGroq
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langgraph.constants import END
 from langgraph.graph import StateGraph
 from langgraph.prebuilt import create_react_agent
@@ -8,13 +8,18 @@ from langgraph.prebuilt import create_react_agent
 from agent.prompts import *
 from agent.states import *
 from agent.tools import write_file, read_file, get_current_directory, list_files
+import os
 
 _ = load_dotenv()
 
 # set_debug(True)
 # set_verbose(True)
 
-llm = ChatGroq(model="llama-3.1-8b-instant", request_timeout=60)
+llm = ChatGoogleGenerativeAI(
+    model="gemini-2.5-flash-lite",
+    google_api_key=os.getenv("GEMINI_API_KEY"),
+    temperature=0
+)
 
 
 def planner_agent(state: dict) -> dict:
